@@ -1,0 +1,95 @@
+﻿
+@model MovieManager.ViewModels.Movies.EditVM
+@{
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["title"] = "Edit Movie";
+}
+
+    <div class="create-movie-box">
+        <form id="create-movie-form" action="/Movies/Edit" method="post">
+            <div class="create-movie-banner">
+                <h1 id="create-movie-h1">Edit Movie</h1>
+            </div>
+            @Html.HiddenFor(x => x.Id)
+
+            <div class="create-movie-item">
+                <p id="create-movie-p">Title:</p>
+                @Html.ValidationMessageFor(x => x.Title)
+                <input id="create-movie-input" type="text" name="title" value="@Html.DisplayFor(x => x.Title, new { @style = "field-validation-error"})" />
+            </div>
+
+
+
+            <div class="create-movie-item">
+                <p id="create-movie-p">Summary</p>
+                @Html.ValidationMessageFor(x => x.Summary)
+                <input id="create-movie-input" type="text" name="summary" value="@Html.DisplayFor(x => x.Summary, new { @style = "field-validation-error"})" />
+            </div>
+
+
+            <div class="create-movie-item">
+                <p id="create-movie-p">Image Url</p>
+                @Html.ValidationMessageFor(x => x.ImageUrl)
+                <input id="create-movie-input" type="text" name="imageUrl" value="@Html.DisplayFor(x => x.ImageUrl, new { @style = "field-validation-error"})" />
+
+            </div>
+
+
+            <div class="create-movie-item">
+                <p id="create-movie-p">Trailer link</p>
+                @Html.ValidationMessageFor(x => x.TrailerUrl)
+                <input id="create-movie-input" type="text" name="trailerUrl" value="@Html.DisplayFor(x => x.TrailerUrl, new { @style = "field-validation-error"})" />
+
+            </div>
+
+
+            <div class="create-movie-item">
+                <p id="create-movie-p">Director</p>
+                @Html.ValidationMessageFor(x => x.Director)
+                <input id="create-movie-input" type="text" name="director" placeholder="Director" value="@Html.DisplayFor(x => x.Director, new { @style = "field-validation-error"})" />
+
+            </div>
+            <div class="create-movie-item">
+                <p id="create-movie-p">Country</p>
+                @Html.ValidationMessageFor(x => x.Country)
+                <input id="create-movie-input" type="text" name="country" value="@Html.DisplayFor(x => x.Country, new { @style = "field-validation-error"})" />
+            </div>
+
+            <div class="create-movie-item">
+                <p id="create-movie-p">Release Date</p>
+                @Html.ValidationMessageFor(x => x.ReleaseDate)
+                <input id="create-movie-input" type="text" min="1933" max="2022" step="1.00" placeholder="Enter release date" name="releaseDate" value="@Html.DisplayFor(x => x.ReleaseDate, new { @style = "field-validation-error"})" />
+
+            </div>
+
+            <div class="create-movie-item">
+                <p id="create-movie-p">Duration</p>
+                @Html.ValidationMessageFor(x => x.Duration)
+                <input id="create-movie-input" type="text" min="0.00" max="10000.00" step="1.00" placeholder="Enter movie duration" name="duration" value="@Html.DisplayFor(x => x.Duration, new { @style = "field-validation-error"})" />
+            </div>
+
+
+
+            <div class="create-movie-item">
+                <div class="col-md-10">
+                    @Html.LabelFor(x => x.GenreId, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                    <select name="GenreId">
+                        @foreach (var item in Model.Genres)
+                        {
+                            <option value="@item.Id">
+                                @item.Name
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="create-movie-btn-block">
+
+                <button id="create-movie-button" type="submit" value="Save">Edit</button>
+            </div>
+        </form>
+
+
+    </div> 

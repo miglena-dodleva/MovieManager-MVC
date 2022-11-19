@@ -1,0 +1,37 @@
+﻿@model MovieManager.ViewModels.Genres.CreateVM
+
+@{
+    ViewData["Title"] = "Create genre";
+}
+
+<div id="create-div" class="genre-box">
+    <form id="create-form" action="/Genres/Create" method="post">
+        <div class="genre-banner">
+            <h1 id="create-h1">Create Genre</h1>
+        </div>
+
+        <div class="genre-item">
+            <p id="create-p">Genre's Name:</p>
+            @Html.ValidationMessageFor(x => x.Name)
+            <input id="create-input" type="text" placeholder="Enter Name" name="name" value="@Html.DisplayFor(x => x.Name, new { @style = "field-validation-error" })">
+        </div>
+
+        <div class="btn-block">
+            <input id="create-button" type="submit" value="Create" />
+             <a id="create-button" href="/Genres/Index">Back</a>
+       
+            
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+

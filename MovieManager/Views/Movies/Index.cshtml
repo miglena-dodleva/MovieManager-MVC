@@ -1,0 +1,104 @@
+﻿@model MovieManager.ViewModels.Movies.IndexVM
+@{
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Movies";
+
+}
+
+
+<div class="index-movie-container">
+    <div class="index-movie-table-responsive">
+        <div class="index-movie-table-wrapper">
+            <div class="index-movie-table-title">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h2 id="index-movie-h2">Movies </h2>
+                    </div>
+                    <div class="col-sm-7">
+                        <a id="index-movie-a-add-movie" href="/Movies/Create" class="index-movie-btn btn-secondary"> <span id="index-movie-span">Create Movie</span></a>						
+                    </div>
+                    
+                </div>
+            </div>
+            <table class="index-movie-table index-movie-table-striped index-movie-table-hover">
+                <thead id="index-movie-thead">
+                    <tr id="index-movie-tr">
+                        <th id="index-movie-th" style="width: 8%" >Title</th>
+                        <th id="index-movie-th" style="width: 8%">Genre</th>
+                        <th id="index-movie-th" style="width: 20%">Summary</th>						
+                        <th id="index-movie-th" style="width: 11%">ImageUrl</th>
+                        <th id="index-movie-th" style="width: 11%">Trailer link</th>
+                        <th id="index-movie-th" style="width: 10%">Director</th>
+                        <th id="index-movie-th" style="width: 8%">Country</th>
+                        <th id="index-movie-th" style="width: 8%">Release Date</th>
+                        <th id="index-movie-th" style="width: 8%">Duration</th>
+                        <th id="index-movie-th" style="width: 8%">Settings</th>
+                    </tr>
+                </thead>
+                <tbody id="index-movie-tbody">
+
+
+
+                     @foreach (var item in Model.Movies)
+                    {
+
+                    <tr id="index-movie-tr">
+                        <td id="index-movie-td" > @Html.DisplayFor(x => item.Title) </td>
+                        <td id="index-movie-td" > @Html.DisplayFor(x => item.Genre.Name) </td>    
+                        <td id="index-movie-td" > @Html.DisplayFor(x => item.Summary) </td>
+                        <td id="index-movie-td" > @Html.DisplayFor(x => item.ImageUrl) </td>                     
+                        <td id="index-movie-td" > @Html.DisplayFor(x => item.TrailerUrl) </td>
+                        <td id="index-movie-td" > @Html.DisplayFor(x => item.Director) </td>
+                        <td id="index-movie-td" > @Html.DisplayFor(x => item.Country) </td>
+                        <td id="index-movie-td" > @Html.DisplayFor(x => item.ReleaseDate) </td>
+                        <td id="index-movie-td" > @Html.DisplayFor(x => item.Duration) </td>
+                        <td id="index-movie-td" >
+                            <a id="index-movie-A1" href="/Movies/Edit?id=@item.Id" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a id="index-movie-A2" href="/Movies/Delete?id=@item.Id" 
+                                onclick="return confirm('Аre you sure you want to delete your movie?');"
+                               class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                             </td>
+                    </tr>
+                    
+                    }
+                    
+                </tbody>
+            </table>
+        
+            
+			<div>
+				@{
+					string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+					string action = this.ViewContext.RouteData.Values["action"].ToString();
+				}
+				@for (int i = 0; i < Model.Pager.PagesCount; i++)
+				{
+					<a class="@(Model.Pager.Page == (i + 1) ? "colored" : "")"
+				   href="/@controller/@action?Pager.Page=@(i+1)&Pager.ItemsPerPage=@Model.Pager.ItemsPerPage">
+						@(i+1)
+					</a>
+				}
+				<script>
+					function  PagingItems_OnChange() {
+
+						let PagingItems = document.getElementById("PagingItems");
+
+						document.location.href = "/@controller/@action?Pager.ItemsPerPage=" + PagingItems.value;
+					}
+				</script>
+
+			</div>
+        </div>
+    </div>
+</div>     
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+

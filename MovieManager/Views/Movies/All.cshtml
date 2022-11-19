@@ -1,0 +1,87 @@
+﻿@model MovieManager.ViewModels.Movies.IndexVM
+@using MovieManager.Entities
+@using MovieManager.Sessions
+@{
+	User user = this.ViewContext.HttpContext.Session.GetObjectFromJson<User>
+						("loggedUser");
+}
+
+<div class="movie-card-body">
+
+	@foreach (var item in Model.Movies)
+		{
+	<div class="movie_card" style="background: url(@item.ImageUrl)">
+		
+
+			<div class="info_section">
+				<div class="movie_header">
+					<img class="locandina" src="@item.ImageUrl" />
+					<h1>@item.Title</h1>
+					<h4>@item.ReleaseDate,@item.Director</h4>
+					<span class="minutes">@item.Duration min</span>
+					<p class="type">@item.Genre.Name</p>
+				</div>
+				<div class="movie_desc">
+					<p class="text">  @item.Country</p>
+					<p class="text"> @item.Summary </p>
+				</div>
+
+				<div class="movie_social">
+
+
+					@if (user != null && user.Username != "admin")
+					{
+						<button class="movie-card-button">
+						<a href="@item.TrailerUrl">Play trailer on YouTube</a>
+							
+						</button>
+					}
+					else
+					{
+						<button class="movie-card-button">
+
+							<a asp-controller="Home" asp-action="Register"
+					   onclick="return confirm('Тo see this movie trailer you must first be logged in or registered in our system!');"><span class="buy">Play trailer on YouTube</span></a>
+						</button>
+					}
+				</div>
+			</div>
+			<div class="blur_back bright_back"></div>
+	</div>
+	}
+</div>
+
+  
+			<div>
+				@{
+					string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+					string action = this.ViewContext.RouteData.Values["action"].ToString();
+				}
+				@for (int i = 0; i < Model.Pager.PagesCount; i++)
+				{
+					<a class="@(Model.Pager.Page == (i + 1) ? "colored" : "")"
+				   href="/@controller/@action?Pager.Page=@(i+1)&Pager.ItemsPerPage=@Model.Pager.ItemsPerPage">
+						@(i+1)
+					</a>
+				}
+				<script>
+					function  PagingItems_OnChange() {
+
+						let PagingItems = document.getElementById("PagingItems");
+
+						document.location.href = "/@controller/@action?Pager.ItemsPerPage=" + PagingItems.value;
+					}
+				</script>
+
+			</div>
+
+
+
+
+
+
+
+
+
+
+

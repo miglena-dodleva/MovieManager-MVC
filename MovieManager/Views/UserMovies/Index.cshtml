@@ -1,0 +1,111 @@
+﻿@model MovieManager.ViewModels.UserMovies.IndexVM
+@using MovieManager.Entities;
+@using MovieManager.Sessions;
+@{
+	this.Layout = "/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "User-Movie";
+	User user = this.ViewContext.HttpContext.Session.GetObjectFromJson<User>
+		("loggedUser");
+}
+
+
+
+<div class="index-user-movie-container">
+	<div class="index-user-movie-table-responsive">
+		<div class="index-user-movie-table-wrapper">
+			<div class="index-user-movie-table-title">
+				<div class="row">
+					<div class="col-sm-5">
+						<h2 id="index-user-movie-h2">User-Movie</h2>
+					</div>
+					@if (user != null && user.Username == "megy" && user.Password == "123456789")
+						{
+							<a id="index-user-movie-a-add-movie" href="/UserMovies/Create" class="index-user-movie-btn btn-secondary">
+								<span id="index-user-movie-span">
+									Create new User-Movie
+								</span>
+							</a>
+
+						}
+				</div>
+			</div>
+			<table class="index-user-movie-table index-user-movie-table-striped index-user-movie-table-hover">
+				<thead id="index-user-movie-thead">
+					<tr id="index-user-movie-tr">
+						<th id="index-user-movie-th">User Name</th>
+						<th id="index-user-movie-th">Movie Name</th>
+
+						@if (user != null && user.Username == "megy" && user.Password == "123456789")
+						{
+							<th id="index-user-movie-th">Delete</th>
+						}
+
+					</tr>
+				</thead>
+				<tbody id="index-user-movie-tbody">
+
+
+
+					@foreach (var item in Model.UserMovies)
+					{
+						<tr id="index-user-movie-tr">
+							<td id="index-user-movie-td">
+								@Html.DisplayFor(x => item.User.FirstName)
+							</td>
+							<td id="index-user-movie-td">
+								@Html.DisplayFor(x => item.Movie.Title)
+							</td>
+							@if (user != null && user.Username == "megy" && user.Password == "123456789")
+							{
+
+								<td id="index-user-movie-td">
+									<a id="index-user-movie-A2" href="/UserMovies/Delete?id=@item.Id"
+							   class="delete" title="Delete" data-toggle="tooltip"
+							   onclick="return confirm('Аre you sure you want to delete this user movie');">
+										<i class="material-icons">&#xE5C9;</i>
+									</a>
+
+								</td>
+							}
+
+						</tr>
+					}
+				</tbody>
+			</table>
+
+
+
+			<div>
+				@{
+					string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+					string action = this.ViewContext.RouteData.Values["action"].ToString();
+				}
+				@for (int i = 0; i < Model.Pager.PagesCount; i++)
+				{
+					<a class="@(Model.Pager.Page == (i + 1) ? "colored" : "")"
+				   href="/@controller/@action?Pager.Page=@(i+1)&Pager.ItemsPerPage=@Model.Pager.ItemsPerPage">
+						@(i+1)
+					</a>
+				}
+				<script>
+					function  PagingItems_OnChange() {
+
+						let PagingItems = document.getElementById("PagingItems");
+
+						document.location.href = "/@controller/@action?Pager.ItemsPerPage=" + PagingItems.value;
+					}
+				</script>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>

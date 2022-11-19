@@ -1,0 +1,108 @@
+﻿@using MovieManager.Entities;
+@using MovieManager.Sessions;
+@{
+	User user = this.ViewContext.HttpContext.Session.GetObjectFromJson<User>("loggedUser");
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - ProjectManager.Core</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" />
+	<!-- home page-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<!---->
+	<!--to register form-->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+	<!---->
+	<!--create genres form-->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<!--index genres view-->
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
+	<!---Create Movie Form-->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+	<!-- Movie cards-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div id="container">
+		<header id="site-header">
+
+			<nav>
+				<ul class="nav-container">
+					<li class="nav-item"><a href="/Home/Index">HOME</a></li>
+					@if (user == null)
+					{
+						<li class="nav-item"><a href="/Movies/All/">MOVIES</a></li>
+						<li class="nav-item"><a href="/Home/Login">LOGIN</a></li>
+						<li class="nav-item"><a href="/Home/Register">REGISTRATION</a></li>
+					}
+					else if (user.Username == "megy" && user.Password == "123456789")
+					{
+						<li class="nav-item has-subnav">
+							<a href="#">BOSS</a>
+							<div class="subnav">
+								<ul>
+									<li><a href="/Admin/AllUsers">Users</a></li>
+								</ul>
+								<ul>
+									<li> <a href="/Movies/Index">Movies</a></li>
+								</ul>
+								<ul>
+									<li><a href="/Genres/Index">Genres</a></li>
+								</ul>
+								<ul>
+									<li><a href="/UserMovies/Index">User-Movies</a></li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item"><a href="/Home/Logout">LOGOUT</a></li>
+					}
+					else
+					{
+						<li class="nav-item"><a href="/Movies/All/">MOVIES</a></li>
+						<li class="nav-item"><a href="/Admin/AllUsers">User in system</a></li>
+						<li class="nav-item"><a href="/UserMovies/Index">User-Movies</a></li>
+						<li class="nav-item"><a>Welcome, @(user.Username)</a></li>
+						<li class="nav-item"><a href="/Home/Logout">LOGOUT</a></li>
+					}
+
+				</ul>
+			</nav>
+		</header>
+
+		<main id="site-content">
+			@RenderBody()
+		</main>
+
+		<footer>
+			<p>© 2022 All rights reserved</p>
+		</footer>
+
+	</div>
+
+</body>
+</html>
+

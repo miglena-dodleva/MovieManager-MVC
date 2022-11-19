@@ -1,0 +1,60 @@
+﻿@model MovieManager.ViewModels.UserMovies.CreateVM
+
+@{
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Create user movies";
+
+}
+
+
+<div class="create-user-movie-box">
+      <form id="create-user-movie-form" asp-action="Create">
+        <div class="create-user-movie-banner">
+          <h1 id="create-user-movie-h1">Create User-Movie</h1>
+        </div>
+
+
+         <div class="create-user-movie-item">
+            
+                @Html.LabelFor(x => x.UserId, htmlAttributes: new { @style = "control-label col-md-2" })
+
+                <select id="create-user-movie-select" name="UserId">
+                    @foreach (var item in Model.Users)
+                    {
+                        <option value="@item.Id">
+                            @item.FirstName  @item.LastName
+                        </option>
+                    }
+                </select>
+              
+        </div>
+
+        
+       <div class="create-user-movie-item">
+
+          @Html.LabelFor(x => x.MovieId, htmlAttributes: new { @style = "control-label col-md-2" })
+
+                <select id="create-user-movie-select" name="MovieId">
+                    @foreach (var item in Model.Movies)
+                    {
+                        <option value="@item.Id">
+                            @item.Title
+                        </option>
+                    }
+                </select>
+           
+       </div>
+
+        
+        <div class="create-user-movie-btn-block">
+
+           
+         
+          <button id="create-user-movie-button" type="submit" value="Create"  >CREATE</button>
+         
+        
+        </div>  
+
+
+      </form>
+    </div>

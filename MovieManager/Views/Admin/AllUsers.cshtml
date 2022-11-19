@@ -1,0 +1,70 @@
+﻿@model MovieManager.ViewModels.Users.IndexVM
+@{
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Users";
+
+}
+
+
+
+<div class="index-user-container">
+    <div class="index-user-table-responsive">
+        <div class="index-user-table-wrapper">
+            <div class="index-user-table-title">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h2 id="index-user-h2">Users in System </h2>
+                    </div>
+                </div>
+            </div>
+            <table class="index-user-table index-user-table-striped index-user-table-hover">
+                <thead id="index-user-thead">
+                    <tr id="index-user-tr">
+                        <th id="index-user-th">Username</th>
+                        <th id="index-user-th">First Name</th>
+                        <th id="index-user-th">Last Name</th>						
+                        
+                    </tr>
+                </thead>
+                <tbody id="index-user-tbody">
+
+
+                  @foreach (var item in Model.Users)
+                  {
+                    <tr id="index-user-tr">
+                        <td id="index-user-td" >@Html.DisplayFor(x => item.Username)</td>
+                        <td id="index-user-td" >@Html.DisplayFor(x => item.FirstName)</td>   
+                        <td id="index-user-td" >@Html.DisplayFor(x => item.LastName)</td>
+                        
+                    </tr>
+                  }
+                    
+                    
+                </tbody>
+            </table>
+             
+			<div>
+				@{
+					string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+					string action = this.ViewContext.RouteData.Values["action"].ToString();
+				}
+				@for (int i = 0; i < Model.Pager.PagesCount; i++)
+				{
+					<a class="@(Model.Pager.Page == (i + 1) ? "colored" : "")"
+				   href="/@controller/@action?Pager.Page=@(i+1)&Pager.ItemsPerPage=@Model.Pager.ItemsPerPage">
+						@(i+1)
+					</a>
+				}
+				<script>
+					function  PagingItems_OnChange() {
+
+						let PagingItems = document.getElementById("PagingItems");
+
+						document.location.href = "/@controller/@action?Pager.ItemsPerPage=" + PagingItems.value;
+					}
+				</script>
+
+			</div>
+        </div>
+    </div>
+</div> 

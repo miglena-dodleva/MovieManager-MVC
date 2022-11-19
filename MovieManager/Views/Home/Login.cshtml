@@ -1,0 +1,25 @@
+﻿@model MovieManager.ViewModels.Home.LoginVM
+@{
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Login";
+}
+
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<form action="/Home/Login" method="post" class="register-form">
+    <h3>Login Here</h3>
+
+    <label for="username">Username</label>
+    @Html.ValidationMessageFor(x => x.Username)
+<input placeholder="Enter Username" name="username" type="text" value="@Html.DisplayFor(x => x.Username, new { @style = "field-validation-error" })">
+
+    <label for="password">Password</label>
+    @Html.ValidationMessageFor(x => x.Password)
+    <input type="password" placeholder="Enter password" name="password" value="@Html.DisplayFor(x => x.Password, new { @style = "field-validation-error" })">
+
+    <input type="submit" class="button" value="Log in">
+
+</form>
+
